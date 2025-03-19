@@ -1,1 +1,22 @@
+INCLUDE Irvine32.inc
+.data
+source byte "Hi im the string to be copied",0
+target BYTE 1024 DUP(?) 
+.code
+main PROC
+mov ecx,lengthof source
+mov esi,offset source
+mov edi,offset target
+l1:
+mov eax,[esi]
+mov[edi],eax
+add esi,1
+add edi,1
+loop l1
+mov edx,offset target
+call writestring
+
+exit
+main ENDP
+END main
 
