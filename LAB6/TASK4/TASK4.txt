@@ -1,0 +1,57 @@
+INCLUDE Irvine32.inc
+
+.data
+id DWORD 5 DUP(?)
+nname BYTE 5 DUP(50 DUP(?))
+year DWORD 5 DUP(?)
+salary DWORD 5 DUP(?)
+prompt BYTE "Enter your name, year and salary for employee no: ", 0
+buffer byte "Sum of all salaries : " ,0
+sum dword ?
+.code
+main PROC
+    mov ebx, 0
+    mov ecx, 5
+
+l2:
+    mov edx, OFFSET prompt
+    call WriteString
+    mov eax, ebx
+    call WriteDec
+    call CrLf
+
+    mov edx, OFFSET nname
+     mov eax, ebx
+    imul eax, 50              ; Multiply index by 50
+    add edx, eax              ; Add the offset to base address
+   
+    call ReadString
+
+    call ReadInt
+    mov esi, OFFSET year
+   
+    mov [esi +TYPE year*ebx], eax
+
+    call ReadInt
+    mov esi, OFFSET salary
+    
+    mov [esi +TYPE salary*ebx], eax
+
+    inc ebx
+    loop l2
+mov ecx ,5
+mov ebx,0
+mov eax,0
+l1:
+mov esi,offset salary
+add eax,[esi +TYPE salary *ebx]
+inc ebx
+loop l1
+mov edx,offset buffer
+call writestring
+call writedec
+    exit
+main ENDP
+
+END main
+
