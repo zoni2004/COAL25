@@ -1,4 +1,4 @@
-TITLE MyFirstCode (Text.asm)
+TITLE k230013COALLAB6 (TASK3c.asm)
 INCLUDE Irvine32.inc
 
 .DATA
