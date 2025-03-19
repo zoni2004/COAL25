@@ -1,1 +1,31 @@
+INCLUDE Irvine32.inc
+.data
+array dword 1,2,3,4,5
+.code
+main PROC
+mov ecx,1
+mov esi,offset array
+mov eax,0
+mov ebx,lengthof array
+dec ebx
+l1:
+mov edx,[esi + eax*type array]
+xchg edx,[esi +ebx * type array]
+mov [esi + eax*type array],edx
+inc eax
+dec ebx
+cmp eax,ebx
+jl l1
+mov ecx,lengthof array
+mov ebx,0
+l2:
+mov eax,[esi +ebx*type array]
+call writedec
+call crlf
+inc ebx
+loop l2
+exit
+main ENDP
+END main
+
 
