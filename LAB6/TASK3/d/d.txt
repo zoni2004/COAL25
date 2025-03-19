@@ -1,0 +1,33 @@
+TITLE MyFirstCode (Text.asm)
+INCLUDE Irvine32.inc
+
+.DATA
+a DWORD 1
+
+.CODE
+main PROC
+   mov eax, a   
+   mov ebx, 4   
+   mov ecx, 4   
+
+L1:
+     push ecx       
+     push eax       
+     mov ecx, ebx   
+
+L2:
+       push eax      
+       call WriteDec 
+       pop eax       
+       inc eax       
+       loop L2       
+
+   call Crlf       
+   dec ebx          
+   pop eax          
+   pop ecx         
+   loop L1          
+
+EXIT
+main ENDP
+END main
