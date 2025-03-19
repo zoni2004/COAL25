@@ -1,1 +1,21 @@
+TITLE k230013COALLAB6 (TASK1.asm)
+INCLUDE Irvine32.inc
+
+.data
+a SWORD 6
+b SWORD 5
+.CODE
+main PROC
+   mov ax, a
+   mov bx, b
+   cmp ax, bx
+   jle skip_code
+   call DumpRegs
+skip_code:
+   add ax, bx
+   call DumpRegs
+EXIT
+main ENDP
+END main
+
 
