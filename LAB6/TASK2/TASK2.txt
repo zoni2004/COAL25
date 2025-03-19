@@ -1,0 +1,28 @@
+TITLE k230013COALLAB6 (TASK2.asm)
+INCLUDE Irvine32.inc
+.data
+a DWORD 1
+b DWORD 1
+.CODE
+main PROC
+   mov ebx, a
+   mov edx, b
+   mov eax, 1
+   call WriteDec
+   call Crlf
+   call WriteDec
+   call Crlf
+   mov ecx, 8
+   mov eax, 0
+   L1:
+     add eax, ebx
+     add eax, edx
+     call WriteDec
+     call Crlf
+     mov ebx, edx
+     mov edx, eax
+     mov eax, 0
+     loop L1
+EXIT
+main ENDP
+END main
