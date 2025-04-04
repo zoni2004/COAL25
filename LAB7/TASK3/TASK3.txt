@@ -1,54 +1,50 @@
-.386
-.MODEL flat, stdcall
-.STACK 4096
-
-ExitProcess PROTO, dwExitCode:DWORD
-
-.data
-    array1 dd 10, 20, 30, 40, 50      
-    array2 dd 5, 15, 25, 35, 45       
-    sum1 dd 0                         
-    sum2 dd 0                        
-    total dd 0                       
-
-.code
+INCLUDE Irvine32.inc
+.DATA
+    array1 DWORD 10, 20, 30, 40, 50 
+    array2 DWORD 5, 15, 25, 35, 45  
+    arrSize DWORD 5                 
+    sum1 DWORD ?                   
+    sum2 DWORD ?                    
+    totalSum DWORD ?                
+.CODE
 main PROC
-    push OFFSET array1
-    call sum_array
-    mov sum1, eax
-    
-    push OFFSET array2
-    call sum_array
-    mov sum2, eax
-    
-    mov eax, sum1
-    add eax, sum2
-    mov total, eax
-    
-    push 0
-    call ExitProcess
+    PUSH OFFSET array1  
+    PUSH arrSize         
+    CALL SumArray
+    MOV sum1, EAX        
+    PUSH OFFSET array2  
+    PUSH arrSize         
+    CALL SumArray
+    MOV sum2, EAX       
+    PUSH sum1
+    PUSH sum2
+    CALL AddSums
+    MOV totalSum, EAX   
+    MOV EAX, totalSum
+    CALL WriteDec
+    CALL Crlf
+    INVOKE ExitProcess, 0
 main ENDP
+SumArray PROC
+    PUSH EBP
+    MOV EBP, ESP
 
-sum_array PROC
-    push ebp
-    mov ebp, esp
-    push ebx
-    push ecx
-    
-    mov ebx, [ebp+8]   
-    mov ecx, 5         
-    xor eax, eax     
-    
-sum_loop:
-    add eax, [ebx]
-    add ebx, 4          
-    loop sum_loop
-    
-    pop ecx
-    pop ebx
-    mov esp, ebp
-    pop ebp
-    ret 4              
-sum_array ENDP
-
+    MOV ECX, [EBP+8] 
+    MOV ESI, [EBP+12]  
+    XOR EAX, EAX     
+SumLoop:
+    ADD EAX, DWORD PTR [ESI]  
+    ADD ESI, 4             
+    LOOP SumLoop              
+    POP EBP
+    RET 8 
+SumArray ENDP
+AddSums PROC
+    PUSH EBP
+    MOV EBP, ESP
+    MOV EAX, [EBP+8]  
+    ADD EAX, [EBP+12]
+    POP EBP
+    RET 8 
+AddSums ENDP
 END main
