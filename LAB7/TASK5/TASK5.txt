@@ -1,1 +1,45 @@
+INCLUDE Irvine32.inc
+
+.DATA
+    prompt  BYTE "Enter a number: ", 0
+    sumMsg  BYTE "The sum of numbers from 1 to ", 0
+    resultMsg BYTE " is ", 0
+    num DWORD ?
+    totalSum DWORD ?
+
+.CODE
+main PROC
+    MOV EDX, OFFSET prompt
+    CALL WriteString
+    
+    CALL ReadInt      
+    MOV num, EAX       
+
+    MOV ECX, num      
+    XOR EAX, EAX  
+    
+sumLoop:
+    ADD EAX, ECX      
+    LOOP sumLoop       
+    
+    MOV totalSum, EAX  
+
+    MOV EDX, OFFSET sumMsg
+    CALL WriteString
+    
+    MOV EAX, num
+    CALL WriteDec      
+    
+    MOV EDX, OFFSET resultMsg
+    CALL WriteString
+    
+    MOV EAX, totalSum
+    CALL WriteDec      
+
+    CALL Crlf          
+
+    INVOKE ExitProcess, 0
+main ENDP
+
+END main
 
