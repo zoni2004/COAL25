@@ -1,1 +1,45 @@
+.386
+.model flat, stdcall
+.stack 4096
+include Irvine32.inc
 
+.data
+    star db '*',0
+    space db ' ',0
+    max_rows = 5    
+
+.code
+main PROC
+    mov ecx, 1          
+    
+print_loop:
+    cmp ecx, max_rows
+    jg exit_program
+    mov eax, max_rows
+    sub eax, ecx
+    mov ebx, eax      
+print_spaces:
+    cmp ebx, 0
+    jle print_stars
+    mov edx, offset space
+    call WriteString
+    dec ebx
+    jmp print_spaces
+    
+print_stars:
+    mov edx, offset star
+    mov ebx, ecx        
+    
+print_star:
+    call WriteString
+    dec ebx
+    jnz print_star
+    
+    call Crlf        
+    inc ecx             
+    jmp print_loop
+    
+exit_program:
+    exit
+main ENDP
+END main
