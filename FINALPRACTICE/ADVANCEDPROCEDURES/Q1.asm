@@ -1,4 +1,3 @@
-//Write a program which contains a procedure named ThreeProd that displays the product of three numeric parameters passed through a stack.//
 ;Write a program which contains a procedure named ThreeProd that displays the
 ;product of three numeric parameters passed through a stack.
 
